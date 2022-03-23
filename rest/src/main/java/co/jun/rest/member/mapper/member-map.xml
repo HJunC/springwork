@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jun.rest.member.mapper.MemberMapper">
+
+	<select id="memberList" resultType="co.jun.rest.member.vo.MemberVO">
+		SELECT *
+		FROM MEMBER
+		ORDER BY 6,1
+	</select>
+	
+	<select id="memberSelect" resultType="co.jun.rest.member.vo.MemberVO">
+		SELECT *
+		FROM MEMBER
+		WHERE ID = #{id}
+		<if test="password != null">
+		AND PASSWORD = #{password}
+		</if>
+	</select>
+	
+	<insert id="memberInsert" parameterType="co.jun.rest.member.vo.MemberVO">
+		INSERT INTO MEMBER(ID, 
+						   PASSWORD, 
+						   NAME, 
+						   TEL, 
+						   ADDRESS)
+		VALUES      (#{id},
+		             #{password},
+		             #{name},
+		             #{tel},
+		             #{address})
+	</insert>
+	
+	<update id="memberUpdate" parameterType="co.jun.rest.member.vo.MemberVO">
+		UPDATE MEMBER
+		<set>
+			<if test="password != '' and passowrd != null"> password = #{password}, </if>
+			<if test="name != null and name != ''"> name = #{name}, </if>
+			<if test="tel != '' and tel != null"> tel = #{tel}, </if>
+			<if test="address != null and address != ''"> address = #{address}, </if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="memberDelete" parameterType="co.jun.rest.member.vo.MemberVO">
+		DELETE FROM MEMBER
+		WHERE  ID = #{id}
+		<where>
+		</where>
+	</delete>
+
+</mapper>
